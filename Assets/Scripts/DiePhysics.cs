@@ -11,6 +11,8 @@ public class DiePhysics : MonoBehaviour
     private Vector3 diceVelocity;
     private Vector3 nudgeForce = new Vector3(5, 5, 5);
 
+    //public float power;
+
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
@@ -49,10 +51,10 @@ public class DiePhysics : MonoBehaviour
         return diceVelocity;
     }
 
-    public void Nudge(Vector3 location,Vector3 force)
+    public void Nudge(Vector3 location,Vector3 force,float power)
     {
         Freeze();
-        rb.AddForceAtPosition(force*-10, location, ForceMode.Impulse);
+        rb.AddForceAtPosition(force*-power, location, ForceMode.Impulse);
     }
 
     private void Freeze()
