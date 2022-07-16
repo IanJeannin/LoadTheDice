@@ -19,7 +19,7 @@ public class DiePhysics : MonoBehaviour
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-        Roll();
+        rb.isKinematic = true;
     }
 
     private void Update()
@@ -28,7 +28,7 @@ public class DiePhysics : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            Roll();
+            TestRoll();
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
@@ -36,16 +36,17 @@ public class DiePhysics : MonoBehaviour
         }
     }
 
-    private void Roll()
+    public void Roll(Vector3 force)
     {
+        rb.isKinematic = false;
         rb.velocity = Vector3.zero;
-        rb.position = new Vector3(0, 10, 0);
+        //rb.position = new Vector3(0, 10, 0);
 
         float xDirection = Random.Range(-750, 750);
         float yDirection = Random.Range(-750, 750);
         float zDirection = Random.Range(-750, 750);
         transform.rotation = Quaternion.identity;
-        rb.AddForce(transform.up * 100);
+        rb.AddForce(force,ForceMode.Impulse);
         rb.AddTorque(xDirection, yDirection, zDirection);
 
         score.RandomGoal();
@@ -77,5 +78,20 @@ public class DiePhysics : MonoBehaviour
             rb.AddTorque(savedAngularVelocity, ForceMode.VelocityChange);
         }
         frozen = !frozen;
+    }
+
+    private void TestRoll()
+    {
+        rb.velocity = Vector3.zero;
+        rb.position = new Vector3(0, 10, 0);
+
+        float xDirection = Random.Range(-750, 750);
+        float yDirection = Random.Range(-750, 750);
+        float zDirection = Random.Range(-750, 750);
+        transform.rotation = Quaternion.identity;
+        rb.AddForce(transform.up * 100);
+        rb.AddTorque(xDirection, yDirection, zDirection);
+
+        score.RandomGoal();
     }
 }
