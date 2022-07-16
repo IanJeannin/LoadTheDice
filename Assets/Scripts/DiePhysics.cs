@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DiePhysics : MonoBehaviour
 {
+    [SerializeField]
+    private Score score;
+
     private static Rigidbody rb;
     private Vector3 savedVelocity;
     private Vector3 savedAngularVelocity;
@@ -44,6 +47,8 @@ public class DiePhysics : MonoBehaviour
         transform.rotation = Quaternion.identity;
         rb.AddForce(transform.up * 100);
         rb.AddTorque(xDirection, yDirection, zDirection);
+
+        score.RandomGoal();
     }
 
     public Vector3 GetVelocity()
