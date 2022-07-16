@@ -7,11 +7,20 @@ public class Nudge : MonoBehaviour
 {
     [SerializeField]
     Slider powerSlider;
+    [SerializeField]
+    private float maxPower;
+
     private float power;
     private float startingMouseX;
     private RaycastHit nudgeLocation;
     bool frozen = false;
     bool slidingPower = false;
+
+    private void Start()
+    {
+        powerSlider.maxValue = maxPower;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -40,11 +49,11 @@ public class Nudge : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.Mouse0))
                 {
-                    power = Input.mousePosition.x - startingMouseX;
+                    power = (Input.mousePosition.x - startingMouseX)/3;
                     Debug.Log(power);
-                    if(power>30)
+                    if(power>maxPower)
                     {
-                        power = 30;
+                        power = maxPower;
                     }
                     else if(power<1)
                     {
